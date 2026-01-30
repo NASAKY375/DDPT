@@ -183,6 +183,20 @@
             flex-wrap: wrap;
         }
 
+        @media (max-width: 768px) {
+            .collection-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-arrows {
+                display: flex;
+                gap: 2rem;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         .nav-arrow {
             font-family: 'Bangers', cursive;
             font-size: 3rem;
@@ -585,6 +599,39 @@
             color: var(--secondary);
         }
 
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--card-bg);
+            border: 4px solid var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--secondary);
+            box-shadow: 5px 5px 0px var(--secondary);
+            transition: all 0.3s ease;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 8px 8px 0px var(--secondary);
+        }
+
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -598,6 +645,13 @@
             .stat-box {
                 padding: 0.8rem 1.5rem;
             }
+            
+            .back-to-top {
+                bottom: 1rem;
+                left: 1rem;
+                width: 50px;
+                height: 50px;
+            }
         }
     </style>
 </head>
@@ -608,9 +662,11 @@
         </header>
 
         <div class="collection-nav">
-            <div class="nav-arrow" id="prev-collection">←</div>
             <div class="collection-title" id="collection-name">Regular Pockets</div>
-            <div class="nav-arrow" id="next-collection">→</div>
+            <div class="nav-arrows">
+                <div class="nav-arrow" id="prev-collection">←</div>
+                <div class="nav-arrow" id="next-collection">→</div>
+            </div>
         </div>
 
         <div class="stats">
@@ -649,6 +705,8 @@
             <div class="loading">Loading your collection...</div>
         </div>
     </div>
+
+    <div class="back-to-top" id="back-to-top" title="Back to top">↑</div>
 
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -1046,6 +1104,21 @@
             if (e.key === 'Enter') {
                 jumpToPocket();
             }
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
         // Initialize
