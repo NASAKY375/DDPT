@@ -844,8 +844,15 @@
                 return `Pocket #${num}`;
             } else if (collection.id === 'mega') {
                 return `Mega ${num}`;
+            } else if (collection.id === 'classics') {
+                return `Classics #${num}`;
             } else {
-                return `${collection.name} #${num}`;
+                // Remove 's' from end of name for "pockets" collections
+                let singularName = collection.name;
+                if (singularName.toLowerCase().endsWith('pockets')) {
+                    singularName = singularName.slice(0, -1); // Remove just the 's'
+                }
+                return `${singularName} #${num}`;
             }
         }
 
