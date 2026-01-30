@@ -475,6 +475,26 @@
             </div>
         </div>
 
+        <div style="text-align: center; margin: 2rem 0;">
+            <div style="display: inline-block; background: var(--card-bg); padding: 1rem 2rem; border-radius: 15px; border: 3px solid var(--secondary); box-shadow: 5px 5px 0px var(--secondary);">
+                <label for="jump-input" style="font-size: 1.3rem; font-weight: bold; color: var(--text); margin-right: 1rem;">Jump to Pocket:</label>
+                <input 
+                    type="text" 
+                    id="jump-input" 
+                    placeholder="e.g. 42 or 174.5"
+                    style="font-family: 'Patrick Hand', cursive; font-size: 1.2rem; padding: 0.5rem 1rem; border: 3px solid var(--secondary); border-radius: 10px; width: 150px;"
+                >
+                <button 
+                    id="jump-button"
+                    style="font-family: 'Patrick Hand', cursive; font-size: 1.2rem; padding: 0.5rem 1.5rem; background: var(--primary); color: var(--text); border: 3px solid var(--secondary); border-radius: 10px; cursor: pointer; margin-left: 0.5rem; font-weight: bold; box-shadow: 3px 3px 0px var(--secondary); transition: all 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='5px 5px 0px var(--secondary)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='3px 3px 0px var(--secondary)';"
+                >
+                    Go! 🔍
+                </button>
+            </div>
+        </div>
+
         <div id="grid" class="grid">
             <div class="loading">Loading your collection...</div>
         </div>
@@ -738,6 +758,55 @@
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') {
                 closeModal();
+            }
+        });
+
+        // Jump to pocket functionality
+        function jumpToPocket() {
+            const input = document.getElementById('jump-input');
+            let searchValue = input.value.trim();
+            
+            if (!searchValue) return;
+            
+            // Convert to internal format (replace . with _)
+            let pocketKey = searchValue.replace('.', '_');
+            
+            // Find the card element
+            const cards = document.querySelectorAll('.pocket-card');
+            let foundCard = null;
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.pocket-title').textContent;
+                // Extract number from "Pocket #174.5" format
+                const cardNumber = title.replace('Pocket #', '');
+                if (cardNumber === searchValue) {
+                    foundCard = card;
+                }
+            });
+            
+            if (foundCard) {
+                // Scroll to card with smooth animation
+                foundCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Highlight the card temporarily
+                foundCard.style.transform = 'scale(1.1) rotate(0deg)';
+                foundCard.style.boxShadow = '0 0 30px rgba(2, 132, 199, 0.6)';
+                
+                setTimeout(() => {
+                    foundCard.style.transform = '';
+                    foundCard.style.boxShadow = '';
+                }, 2000);
+                
+                input.value = '';
+            } else {
+                alert(`Pocket #${searchValue} not found. Make sure you enter a valid pocket number (1-373 or half pockets like 174.5)`);
+            }
+        }
+        
+        document.getElementById('jump-button').addEventListener('click', jumpToPocket);
+        document.getElementById('jump-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                jumpToPocket();
             }
         });
 
