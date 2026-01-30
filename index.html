@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donald Duck Pockets Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #7DD3FC;
+            --secondary: #0284C7;
+            --accent: #0369A1;
+            --bg: #E0F2FE;
+            --card-bg: #FFFFFF;
+            --text: #0C4A6E;
+            --shadow: rgba(2, 132, 199, 0.15);
+            --check-green: #06D6A0;
+        }
+
+        body {
+            font-family: 'Patrick Hand', cursive;
+            background: linear-gradient(135deg, var(--bg) 0%, #BAE6FD 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideDown 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        header img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            border: 3px solid var(--secondary);
+            box-shadow: 5px 5px 0px var(--secondary);
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        .stat-box.checked {
+            transform: rotate(1deg);
+        }
+
+        .stat-box.buy-cheap {
+            transform: rotate(-1deg);
+        }
+
+        .stat-number {
+            font-family: 'Bangers', cursive;
+            font-size: 2.5rem;
+            color: var(--accent);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text);
+            text-transform: uppercase;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pocket-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 4px solid var(--secondary);
+            box-shadow: 6px 6px 0px var(--shadow);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            cursor: pointer;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) rotate(-3deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        .pocket-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 10px 10px 0px var(--shadow);
+        }
+
+        .pocket-card.checked {
+            background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+            border-color: var(--check-green);
+        }
+
+        .pocket-card.buy-cheap {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+            border-color: #F59E0B;
+        }
+
+        .pocket-card.checked::before {
+            content: '✓';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 50px;
+            height: 50px;
+            background: var(--check-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: white;
+            border: 4px solid var(--secondary);
+            transform: rotate(15deg);
+            animation: checkPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .pocket-card.buy-cheap::before {
+            content: '$';
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            width: 50px;
+            height: 50px;
+            background: #F59E0B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: white;
+            border: 4px solid var(--secondary);
+            transform: rotate(15deg);
+            animation: checkPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes checkPop {
+            0% {
+                transform: scale(0) rotate(15deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(15deg);
+            }
+            100% {
+                transform: scale(1) rotate(15deg);
+            }
+        }
+
+        .image-container {
+            width: 100%;
+            height: 250px;
+            background: var(--bg);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 3px solid var(--secondary);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .pocket-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .pocket-card:hover .pocket-image {
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            color: var(--secondary);
+            background: linear-gradient(45deg, var(--primary) 0%, #7DD3FC 100%);
+        }
+
+        .pocket-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 0.8rem;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .custom-checkbox {
+            width: 35px;
+            height: 35px;
+            border: 4px solid var(--secondary);
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            color: var(--check-green);
+        }
+
+        .custom-checkbox:hover {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--primary);
+        }
+
+        .checkbox-label {
+            font-size: 1.2rem;
+            color: var(--text);
+            font-weight: bold;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 5px solid var(--secondary);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            animation: modalPop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes modalPop {
+            0% {
+                transform: scale(0.5) rotate(-10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .modal-title {
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .modal-text {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.2rem;
+            padding: 0.8rem 2rem;
+            border: 3px solid var(--secondary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .btn-confirm {
+            background: var(--check-green);
+            color: white;
+            box-shadow: 4px 4px 0px var(--secondary);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 0px var(--secondary);
+        }
+
+        .btn-cancel {
+            background: #EF4444;
+            color: white;
+            box-shadow: 4px 4px 0px var(--secondary);
+        }
+
+        .btn-cancel:hover {
+            transform: translateY(-3px);
+            box-shadow: 6px 6px 0px var(--secondary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-family: 'Bangers', cursive;
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .error-message {
+            background: #FEE2E2;
+            border: 3px solid #EF4444;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .error-title {
+            font-family: 'Bangers', cursive;
+            font-size: 1.8rem;
+            color: #991B1B;
+            margin-bottom: 0.5rem;
+        }
+
+        .error-text {
+            font-size: 1.1rem;
+            color: #7F1D1D;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1.5rem;
+            }
+
+            .stats {
+                gap: 1rem;
+            }
+
+            .stat-box {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="Pocket_tracker_logo.png" alt="Donald Duck Pocket Tracker">
+        </header>
+
+        <div id="error-container"></div>
+
+        <div class="stats">
+            <div class="stat-box">
+                <span class="stat-number" id="total-count">0</span>
+                <span class="stat-label">Total Pockets</span>
+            </div>
+            <div class="stat-box checked">
+                <span class="stat-number" id="collected-count">0</span>
+                <span class="stat-label">Collected</span>
+            </div>
+            <div class="stat-box buy-cheap">
+                <span class="stat-number" id="buy-cheap-count">0</span>
+                <span class="stat-label">Buy When Cheap</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number" id="remaining-count">0</span>
+                <span class="stat-label">To Find</span>
+            </div>
+        </div>
+
+        <div id="grid" class="grid">
+            <div class="loading">Loading your collection...</div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title" id="modal-title">Pocket #<span id="modal-pocket-number"></span></div>
+            <div class="modal-text">What's the status of this pocket?</div>
+            <div class="modal-buttons" style="flex-direction: column;">
+                <button class="btn btn-confirm" id="btn-collected">✓ I Have It!</button>
+                <button class="btn" id="btn-buy-cheap" style="background: #F59E0B; color: white; box-shadow: 4px 4px 0px var(--secondary);">$ Buy When Cheap</button>
+                <button class="btn" id="btn-none" style="background: #94A3B8; color: white; box-shadow: 4px 4px 0px var(--secondary);">Clear Status</button>
+                <button class="btn btn-cancel" id="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import Firebase modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
+
+        // ============================================
+        // FIREBASE CONFIGURATION
+        // ============================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5lvEpzKwfIXOqDvYfkor0jHKb_LJA1vY",
+            authDomain: "ddpt-bad7c.firebaseapp.com",
+            databaseURL: "https://ddpt-bad7c-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "ddpt-bad7c",
+            storageBucket: "ddpt-bad7c.firebasestorage.app",
+            messagingSenderId: "21566768227",
+            appId: "1:21566768227:web:dbdd3f8b664a8af846a456"
+        };
+
+        // Initialize Firebase
+        let app, database;
+        try {
+            app = initializeApp(firebaseConfig);
+            database = getDatabase(app);
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+        }
+
+        // ============================================
+        // APPLICATION CODE
+        // ============================================
+        
+        // Generate all pocket numbers from 1 to 373, plus half pockets
+        const wholePockets = Array.from({ length: 373 }, (_, i) => i + 1);
+        const halfPockets = [174.5, 190.5, 198.5, 202.5, 207.5, 214.5, 273.5];
+        const pocketNumbers = [...wholePockets, ...halfPockets].sort((a, b) => a - b);
+
+        let pocketData = {};
+        let pendingToggle = null;
+
+        // Initialize and listen for changes
+        async function initDatabase() {
+            if (!database) {
+                console.error("Database not initialized");
+                document.getElementById('error-container').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-title">⚠️ Database Connection Error</div>
+                        <div class="error-text">
+                            Could not connect to Firebase. Please check your configuration.
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            console.log('Firebase initialized successfully!');
+            console.log('Database URL:', firebaseConfig.databaseURL);
+
+            const pocketsRef = ref(database, 'pockets');
+            
+            // Listen for real-time updates
+            onValue(pocketsRef, (snapshot) => {
+                console.log('Data received from Firebase');
+                const data = snapshot.val();
+                if (data) {
+                    pocketData = data;
+                    console.log('Loaded existing data');
+                } else {
+                    console.log('No data found, initializing...');
+                    // Initialize all pockets as 'none'
+                    pocketNumbers.forEach(num => {
+                        pocketData[num] = 'none';
+                    });
+                    saveData();
+                }
+                renderPockets();
+                updateStats();
+            }, (error) => {
+                console.error('Firebase read error:', error);
+                document.getElementById('error-container').innerHTML = `
+                    <div class="error-message">
+                        <div class="error-title">⚠️ Firebase Read Error</div>
+                        <div class="error-text">
+                            Error: ${error.message}<br><br>
+                            Please make sure your Firebase Realtime Database rules allow reading.<br>
+                            Go to Firebase Console → Realtime Database → Rules and set:<br>
+                            <code>".read": true, ".write": true</code>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Save data to Firebase
+        async function saveData() {
+            if (!database) {
+                alert('Database not initialized. Please check your Firebase setup.');
+                return;
+            }
+            const pocketsRef = ref(database, 'pockets');
+            try {
+                await set(pocketsRef, pocketData);
+                console.log('Data saved successfully!');
+            } catch (error) {
+                console.error('Error saving data:', error);
+                console.error('Error code:', error.code);
+                console.error('Error message:', error.message);
+                alert('Error saving data: ' + error.message + '\n\nPlease check:\n1. Firebase rules are set to allow read/write\n2. Your internet connection is working\n3. The database URL in Firebase config is correct');
+            }
+        }
+
+        // Toggle pocket status
+        function togglePocket(pocketNumber) {
+            pendingToggle = pocketNumber;
+            
+            const modal = document.getElementById('modal');
+            document.getElementById('modal-pocket-number').textContent = pocketNumber;
+            
+            modal.classList.add('active');
+        }
+
+        // Set pocket status
+        async function setPocketStatus(status) {
+            if (pendingToggle !== null) {
+                pocketData[pendingToggle] = status;
+                await saveData();
+                closeModal();
+            }
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            pendingToggle = null;
+        }
+
+        // Render pockets grid
+        function renderPockets() {
+            const grid = document.getElementById('grid');
+            grid.innerHTML = '';
+
+            pocketNumbers.forEach((num, index) => {
+                const state = pocketData[num] || 'none';
+                const card = document.createElement('div');
+                let cardClass = 'pocket-card';
+                if (state === 'collected') cardClass += ' checked';
+                if (state === 'buy-cheap') cardClass += ' buy-cheap';
+                
+                card.className = cardClass;
+                card.style.animationDelay = `${index * 0.01}s`;
+                
+                // Determine image filename (use 'h' suffix for half pockets)
+                const isHalfPocket = num % 1 !== 0;
+                const imageNum = isHalfPocket ? Math.floor(num) : num;
+                const imageSuffix = isHalfPocket ? 'h' : '';
+                const imageName = `${imageNum}${imageSuffix}.png`;
+                
+                let statusLabel = 'Need it';
+                if (state === 'collected') statusLabel = 'Got it!';
+                if (state === 'buy-cheap') statusLabel = 'Buy cheap';
+                
+                card.innerHTML = `
+                    <div class="image-container">
+                        <img 
+                            src="${imageName}" 
+                            alt="Pocket ${num}"
+                            class="pocket-image"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="placeholder-image" style="display: none;">
+                            ${num}
+                        </div>
+                    </div>
+                    <div class="pocket-title">Pocket #${num}</div>
+                    <div class="checkbox-container">
+                        <div class="custom-checkbox">
+                            ${state === 'collected' ? '✓' : state === 'buy-cheap' ? '$' : ''}
+                        </div>
+                        <span class="checkbox-label">${statusLabel}</span>
+                    </div>
+                `;
+
+                card.addEventListener('click', () => togglePocket(num));
+                grid.appendChild(card);
+            });
+        }
+
+        // Update statistics
+        function updateStats() {
+            const total = pocketNumbers.length;
+            const collected = Object.values(pocketData).filter(v => v === 'collected').length;
+            const buyCheap = Object.values(pocketData).filter(v => v === 'buy-cheap').length;
+            const remaining = total - collected - buyCheap;
+
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('collected-count').textContent = collected;
+            document.getElementById('buy-cheap-count').textContent = buyCheap;
+            document.getElementById('remaining-count').textContent = remaining;
+        }
+
+        // Event listeners
+        document.getElementById('btn-collected').addEventListener('click', () => setPocketStatus('collected'));
+        document.getElementById('btn-buy-cheap').addEventListener('click', () => setPocketStatus('buy-cheap'));
+        document.getElementById('btn-none').addEventListener('click', () => setPocketStatus('none'));
+        document.getElementById('btn-cancel').addEventListener('click', closeModal);
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
+        });
+
+        // Initialize on load
+        initDatabase();
+    </script>
+</body>
+</html>
