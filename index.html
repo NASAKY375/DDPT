@@ -23,14 +23,107 @@
             --check-green: #06D6A0;
         }
 
+        /* Theme colors for different collections */
+        body.regular {
+            --primary: #7DD3FC;
+            --secondary: #0284C7;
+            --accent: #0369A1;
+            --bg: #E0F2FE;
+        }
+
+        body.dubbel {
+            --primary: #FCA5A5;
+            --secondary: #DC2626;
+            --accent: #991B1B;
+            --bg: #FEE2E2;
+        }
+
+        body.thema {
+            --primary: #D1D5DB;
+            --secondary: #374151;
+            --accent: #1F2937;
+            --bg: #F3F4F6;
+        }
+
+        body.classics {
+            --primary: #FDE047;
+            --secondary: #CA8A04;
+            --accent: #854D0E;
+            --bg: #FEF9C3;
+        }
+
+        body.duckburg {
+            --primary: #F87171;
+            --secondary: #7F1D1D;
+            --accent: #450A0A;
+            --bg: #FEE2E2;
+        }
+
+        body.wereldreis {
+            --primary: #86EFAC;
+            --secondary: #16A34A;
+            --accent: #166534;
+            --bg: #DCFCE7;
+        }
+
+        body.fantasy {
+            --primary: #A3E635;
+            --secondary: #4D7C0F;
+            --accent: #365314;
+            --bg: #ECFCCB;
+        }
+
+        body.galaxy {
+            --primary: #60A5FA;
+            --secondary: #1E3A8A;
+            --accent: #1E40AF;
+            --bg: #DBEAFE;
+        }
+
+        body.premium {
+            --primary: #A8A29E;
+            --secondary: #1C1917;
+            --accent: #0C0A09;
+            --bg: #E7E5E4;
+        }
+
+        body.history {
+            --primary: #D4A574;
+            --secondary: #78350F;
+            --accent: #451A03;
+            --bg: #FED7AA;
+        }
+
+        body.duckstad {
+            --primary: #E5E7EB;
+            --secondary: #4B5563;
+            --accent: #1F2937;
+            --bg: #F9FAFB;
+        }
+
+        body.mini {
+            --primary: #FDBA74;
+            --secondary: #EA580C;
+            --accent: #9A3412;
+            --bg: #FFEDD5;
+        }
+
+        body.mega {
+            --primary: #C084FC;
+            --secondary: #7C3AED;
+            --accent: #5B21B6;
+            --bg: #F3E8FF;
+        }
+
         body {
             font-family: 'Patrick Hand', cursive;
-            background: linear-gradient(135deg, var(--bg) 0%, #BAE6FD 100%);
+            background: linear-gradient(135deg, var(--bg) 0%, var(--primary) 100%);
             min-height: 100vh;
             padding: 2rem 1rem;
             background-attachment: fixed;
             position: relative;
             overflow-x: hidden;
+            transition: background 0.5s ease;
         }
 
         body::before {
@@ -41,10 +134,12 @@
             right: 0;
             bottom: 0;
             background-image: 
-                radial-gradient(circle at 20% 30%, rgba(125, 211, 252, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(2, 132, 199, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 30%, var(--primary) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, var(--secondary) 0%, transparent 50%);
+            opacity: 0.15;
             pointer-events: none;
             z-index: 0;
+            transition: background 0.5s ease;
         }
 
         .container {
@@ -56,7 +151,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             animation: slideDown 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
@@ -74,16 +169,53 @@
         header img {
             max-width: 100%;
             height: auto;
-            max-height: 200px;
+            max-height: 150px;
             margin: 0 auto;
             display: block;
         }
 
-        .subtitle {
-            font-size: 1.5rem;
-            color: var(--accent);
-            font-weight: bold;
-            letter-spacing: 1px;
+        .collection-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .nav-arrow {
+            font-family: 'Bangers', cursive;
+            font-size: 3rem;
+            background: var(--card-bg);
+            border: 4px solid var(--secondary);
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0px var(--secondary);
+            color: var(--secondary);
+        }
+
+        .nav-arrow:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 8px 8px 0px var(--secondary);
+        }
+
+        .collection-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            color: var(--secondary);
+            text-shadow: 3px 3px 0px var(--primary);
+            letter-spacing: 2px;
+            padding: 1rem 2rem;
+            background: var(--card-bg);
+            border: 4px solid var(--secondary);
+            border-radius: 20px;
+            box-shadow: 6px 6px 0px var(--secondary);
         }
 
         .stats {
@@ -129,6 +261,49 @@
             text-transform: uppercase;
         }
 
+        .jump-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .jump-box {
+            display: inline-block;
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            border: 3px solid var(--secondary);
+            box-shadow: 5px 5px 0px var(--secondary);
+        }
+
+        .jump-input {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border: 3px solid var(--secondary);
+            border-radius: 10px;
+            width: 150px;
+        }
+
+        .jump-button {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.2rem;
+            padding: 0.5rem 1.5rem;
+            background: var(--primary);
+            color: var(--text);
+            border: 3px solid var(--secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            font-weight: bold;
+            box-shadow: 3px 3px 0px var(--secondary);
+            transition: all 0.3s ease;
+        }
+
+        .jump-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 5px 5px 0px var(--secondary);
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -166,7 +341,7 @@
         }
 
         .pocket-card.checked {
-            background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%);
+            background: linear-gradient(135deg, var(--bg) 0%, var(--primary) 100%);
             border-color: var(--check-green);
         }
 
@@ -258,7 +433,7 @@
             font-family: 'Bangers', cursive;
             font-size: 3rem;
             color: var(--secondary);
-            background: linear-gradient(45deg, var(--primary) 0%, #7DD3FC 100%);
+            background: linear-gradient(45deg, var(--primary) 0%, var(--bg) 100%);
         }
 
         .pocket-title {
@@ -305,7 +480,6 @@
             font-weight: bold;
         }
 
-        /* Modal styles */
         .modal {
             display: none;
             position: fixed;
@@ -366,6 +540,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
+            flex-direction: column;
         }
 
         .btn {
@@ -410,28 +585,6 @@
             color: var(--secondary);
         }
 
-        .error-message {
-            background: #FEE2E2;
-            border: 3px solid #EF4444;
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .error-title {
-            font-family: 'Bangers', cursive;
-            font-size: 1.8rem;
-            color: #991B1B;
-            margin-bottom: 0.5rem;
-        }
-
-        .error-text {
-            font-size: 1.1rem;
-            color: #7F1D1D;
-        }
-
         @media (max-width: 768px) {
             .grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -448,13 +601,17 @@
         }
     </style>
 </head>
-<body>
+<body class="regular">
     <div class="container">
         <header>
             <img src="Pocket_tracker_logo.png" alt="Donald Duck Pocket Tracker" onerror="this.src='Pocket_tracker_logo.jpg'">
         </header>
 
-        <div id="error-container"></div>
+        <div class="collection-nav">
+            <div class="nav-arrow" id="prev-collection">←</div>
+            <div class="collection-title" id="collection-name">Regular Pockets</div>
+            <div class="nav-arrow" id="next-collection">→</div>
+        </div>
 
         <div class="stats">
             <div class="stat-box">
@@ -475,23 +632,16 @@
             </div>
         </div>
 
-        <div style="text-align: center; margin: 2rem 0;">
-            <div style="display: inline-block; background: var(--card-bg); padding: 1rem 2rem; border-radius: 15px; border: 3px solid var(--secondary); box-shadow: 5px 5px 0px var(--secondary);">
-                <label for="jump-input" style="font-size: 1.3rem; font-weight: bold; color: var(--text); margin-right: 1rem;">Jump to Pocket:</label>
+        <div class="jump-container">
+            <div class="jump-box">
+                <label for="jump-input" style="font-size: 1.3rem; font-weight: bold; color: var(--text); margin-right: 1rem;">Jump to:</label>
                 <input 
                     type="text" 
                     id="jump-input" 
-                    placeholder="e.g. 42 or 174.5"
-                    style="font-family: 'Patrick Hand', cursive; font-size: 1.2rem; padding: 0.5rem 1rem; border: 3px solid var(--secondary); border-radius: 10px; width: 150px;"
+                    class="jump-input"
+                    placeholder="e.g. 42"
                 >
-                <button 
-                    id="jump-button"
-                    style="font-family: 'Patrick Hand', cursive; font-size: 1.2rem; padding: 0.5rem 1.5rem; background: var(--primary); color: var(--text); border: 3px solid var(--secondary); border-radius: 10px; cursor: pointer; margin-left: 0.5rem; font-weight: bold; box-shadow: 3px 3px 0px var(--secondary); transition: all 0.3s ease;"
-                    onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='5px 5px 0px var(--secondary)';"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='3px 3px 0px var(--secondary)';"
-                >
-                    Go! 🔍
-                </button>
+                <button id="jump-button" class="jump-button">Go! 🔍</button>
             </div>
         </div>
 
@@ -500,12 +650,11 @@
         </div>
     </div>
 
-    <!-- Confirmation Modal -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <div class="modal-title" id="modal-title">Pocket #<span id="modal-pocket-number"></span></div>
             <div class="modal-text">What's the status of this pocket?</div>
-            <div class="modal-buttons" style="flex-direction: column;">
+            <div class="modal-buttons">
                 <button class="btn btn-confirm" id="btn-collected">✓ I Have It!</button>
                 <button class="btn" id="btn-buy-cheap" style="background: #F59E0B; color: white; box-shadow: 4px 4px 0px var(--secondary);">$ Buy When Cheap</button>
                 <button class="btn" id="btn-none" style="background: #94A3B8; color: white; box-shadow: 4px 4px 0px var(--secondary);">Clear Status</button>
@@ -514,15 +663,10 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
-        // Import Firebase modules
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
         import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
-        // ============================================
-        // FIREBASE CONFIGURATION
-        // ============================================
         const firebaseConfig = {
             apiKey: "AIzaSyA5lvEpzKwfIXOqDvYfkor0jHKb_LJA1vY",
             authDomain: "ddpt-bad7c.firebaseapp.com",
@@ -533,7 +677,6 @@
             appId: "1:21566768227:web:dbdd3f8b664a8af846a456"
         };
 
-        // Initialize Firebase
         let app, database;
         try {
             app = initializeApp(firebaseConfig);
@@ -542,149 +685,246 @@
             console.error("Firebase initialization error:", error);
         }
 
-        // ============================================
-        // APPLICATION CODE
-        // ============================================
-        
-        // Generate all pocket numbers from 1 to 373, plus half pockets
-        // Note: Firebase doesn't allow dots in keys, so we use "174_5" instead of "174.5"
-        const wholePockets = Array.from({ length: 373 }, (_, i) => i + 1);
-        const halfPockets = ['174_5', '190_5', '198_5', '202_5', '207_5', '214_5', '273_5'];
-        
-        // Create display mapping (for showing "174.5" to users)
-        const displayNames = {
-            '174_5': '174.5',
-            '190_5': '190.5',
-            '198_5': '198.5',
-            '202_5': '202.5',
-            '207_5': '207.5',
-            '214_5': '214.5',
-            '273_5': '273.5'
-        };
-        
-        // Create image name mapping (for loading correct images like "174h.jpg")
-        const imageNames = {
-            '174_5': '174h',
-            '190_5': '190h',
-            '198_5': '198h',
-            '202_5': '202h',
-            '207_5': '207h',
-            '214_5': '214h',
-            '273_5': '273h'
-        };
-        
-        const pocketNumbers = [...wholePockets, ...halfPockets].sort((a, b) => {
-            const aNum = typeof a === 'string' ? parseFloat(a.replace('_', '.')) : a;
-            const bNum = typeof b === 'string' ? parseFloat(b.replace('_', '.')) : b;
-            return aNum - bNum;
-        });
+        // Collection definitions
+        const collections = [
+            {
+                id: 'regular',
+                name: 'Regular Pockets',
+                prefix: '',
+                count: 373,
+                theme: 'regular',
+                halfPockets: [174.5, 190.5, 198.5, 202.5, 207.5, 214.5, 273.5]
+            },
+            {
+                id: 'dubbel',
+                name: 'Dubbelpockets',
+                prefix: 'D',
+                count: 101,
+                theme: 'dubbel'
+            },
+            {
+                id: 'thema',
+                name: 'Themapockets',
+                prefix: 'T',
+                count: 68,
+                theme: 'thema'
+            },
+            {
+                id: 'classics',
+                name: 'Classics',
+                prefix: 'C',
+                count: 9,
+                theme: 'classics'
+            },
+            {
+                id: 'duckburg',
+                name: 'Duckburg',
+                prefix: 'DB',
+                count: 6,
+                theme: 'duckburg'
+            },
+            {
+                id: 'wereldreis',
+                name: 'Wereldreis',
+                prefix: 'W',
+                count: 6,
+                theme: 'wereldreis'
+            },
+            {
+                id: 'fantasy',
+                name: 'Fantasy',
+                prefix: 'F',
+                count: 6,
+                theme: 'fantasy'
+            },
+            {
+                id: 'galaxy',
+                name: 'Galaxy',
+                prefix: 'G',
+                count: 6,
+                theme: 'galaxy'
+            },
+            {
+                id: 'premium',
+                name: 'Premium',
+                prefix: 'P',
+                count: 34,
+                theme: 'premium'
+            },
+            {
+                id: 'history',
+                name: 'History',
+                prefix: 'H',
+                count: 8,
+                theme: 'history'
+            },
+            {
+                id: 'duckstad',
+                name: 'Duckstad',
+                prefix: 'DS',
+                count: 11,
+                theme: 'duckstad'
+            },
+            {
+                id: 'mini',
+                name: 'Mini',
+                prefix: 'MN',
+                count: 11,
+                theme: 'mini'
+            },
+            {
+                id: 'mega',
+                name: 'Mega',
+                prefix: 'MG',
+                count: 11, // zomer 13-18 (6) + winter 13-15 (3) = 9, but you said 11 total
+                theme: 'mega',
+                special: ['Z13', 'Z14', 'Z15', 'Z16', 'Z17', 'Z18', 'W13', 'W14', 'W15'] // Special naming
+            }
+        ];
 
+        let currentCollectionIndex = 0;
         let pocketData = {};
         let pendingToggle = null;
 
-        // Initialize and listen for changes
+        function getCurrentCollection() {
+            return collections[currentCollectionIndex];
+        }
+
+        function generatePocketNumbers(collection) {
+            if (collection.special) {
+                // Mega has special naming
+                return collection.special;
+            }
+            
+            const pockets = [];
+            for (let i = 1; i <= collection.count; i++) {
+                pockets.push(i);
+            }
+            
+            // Add half pockets for regular collection
+            if (collection.halfPockets) {
+                collection.halfPockets.forEach(hp => {
+                    pockets.push(hp);
+                });
+                pockets.sort((a, b) => a - b);
+            }
+            
+            return pockets;
+        }
+
+        function getStorageKey(collection, num) {
+            // Convert numbers to storage-safe format
+            if (typeof num === 'number' && num % 1 !== 0) {
+                // Half pocket: 174.5 -> 174_5
+                return `${collection.id}_${String(num).replace('.', '_')}`;
+            }
+            return `${collection.id}_${num}`;
+        }
+
+        function getImageName(collection, num) {
+            if (collection.id === 'regular') {
+                // Regular pockets: check if half pocket
+                if (typeof num === 'number' && num % 1 !== 0) {
+                    // Half pocket: 174.5 -> 174h.jpg
+                    return `${Math.floor(num)}h.jpg`;
+                }
+                // Regular: 1 -> 001.jpg
+                return `${String(num).padStart(3, '0')}.jpg`;
+            } else if (collection.id === 'mega') {
+                // Mega: Z13, W14, etc. -> MGZ13.jpg, MGW14.jpg
+                return `${collection.prefix}${num}.jpg`;
+            } else {
+                // Other collections: D001.jpg, T001.jpg, etc.
+                return `${collection.prefix}${String(num).padStart(3, '0')}.jpg`;
+            }
+        }
+
+        function getDisplayName(collection, num) {
+            if (collection.id === 'regular') {
+                return `Pocket #${num}`;
+            } else if (collection.id === 'mega') {
+                return `Mega ${num}`;
+            } else {
+                return `${collection.name} #${num}`;
+            }
+        }
+
         async function initDatabase() {
             if (!database) {
                 console.error("Database not initialized");
-                document.getElementById('error-container').innerHTML = `
-                    <div class="error-message">
-                        <div class="error-title">⚠️ Database Connection Error</div>
-                        <div class="error-text">
-                            Could not connect to Firebase. Please check your configuration.
-                        </div>
-                    </div>
-                `;
                 return;
             }
 
-            console.log('Firebase initialized successfully!');
-            console.log('Database URL:', firebaseConfig.databaseURL);
-
-            const pocketsRef = ref(database, 'pockets');
+            const collectionId = getCurrentCollection().id;
+            const dataRef = ref(database, `collections/${collectionId}`);
             
-            // Listen for real-time updates
-            onValue(pocketsRef, (snapshot) => {
-                console.log('Data received from Firebase');
+            onValue(dataRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data) {
                     pocketData = data;
-                    console.log('Loaded existing data');
                 } else {
-                    console.log('No data found, initializing...');
-                    // Initialize all pockets as 'none'
-                    pocketNumbers.forEach(num => {
-                        pocketData[num] = 'none';
-                    });
-                    saveData();
+                    pocketData = {};
                 }
                 renderPockets();
                 updateStats();
             }, (error) => {
                 console.error('Firebase read error:', error);
-                document.getElementById('error-container').innerHTML = `
-                    <div class="error-message">
-                        <div class="error-title">⚠️ Firebase Read Error</div>
-                        <div class="error-text">
-                            Error: ${error.message}<br><br>
-                            Please make sure your Firebase Realtime Database rules allow reading.<br>
-                            Go to Firebase Console → Realtime Database → Rules and set:<br>
-                            <code>".read": true, ".write": true</code>
-                        </div>
-                    </div>
-                `;
             });
         }
 
-        // Save data to Firebase
         async function saveData() {
-            if (!database) {
-                alert('Database not initialized. Please check your Firebase setup.');
-                return;
-            }
-            const pocketsRef = ref(database, 'pockets');
+            if (!database) return;
+            const collectionId = getCurrentCollection().id;
+            const dataRef = ref(database, `collections/${collectionId}`);
             try {
-                await set(pocketsRef, pocketData);
-                console.log('Data saved successfully!');
+                await set(dataRef, pocketData);
             } catch (error) {
                 console.error('Error saving data:', error);
-                console.error('Error code:', error.code);
-                console.error('Error message:', error.message);
-                alert('Error saving data: ' + error.message + '\n\nPlease check:\n1. Firebase rules are set to allow read/write\n2. Your internet connection is working\n3. The database URL in Firebase config is correct');
+                alert('Error saving data: ' + error.message);
             }
         }
 
-        // Toggle pocket status
-        function togglePocket(pocketNumber) {
-            pendingToggle = pocketNumber;
+        function switchCollection(direction) {
+            currentCollectionIndex += direction;
+            if (currentCollectionIndex < 0) currentCollectionIndex = collections.length - 1;
+            if (currentCollectionIndex >= collections.length) currentCollectionIndex = 0;
             
-            const modal = document.getElementById('modal');
-            document.getElementById('modal-pocket-number').textContent = pocketNumber;
+            const collection = getCurrentCollection();
+            document.getElementById('collection-name').textContent = collection.name;
+            document.body.className = collection.theme;
             
-            modal.classList.add('active');
+            initDatabase();
         }
 
-        // Set pocket status
+        function togglePocket(storageKey, displayName) {
+            pendingToggle = { key: storageKey, display: displayName };
+            document.getElementById('modal-pocket-number').textContent = displayName;
+            document.getElementById('modal').classList.add('active');
+        }
+
         async function setPocketStatus(status) {
             if (pendingToggle !== null) {
-                pocketData[pendingToggle] = status;
+                pocketData[pendingToggle.key] = status;
                 await saveData();
                 closeModal();
             }
         }
 
-        // Close modal
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
             pendingToggle = null;
         }
 
-        // Render pockets grid
         function renderPockets() {
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
 
+            const collection = getCurrentCollection();
+            const pocketNumbers = generatePocketNumbers(collection);
+
             pocketNumbers.forEach((num, index) => {
-                const state = pocketData[num] || 'none';
+                const storageKey = getStorageKey(collection, num);
+                const state = pocketData[storageKey] || 'none';
                 const card = document.createElement('div');
                 let cardClass = 'pocket-card';
                 if (state === 'collected') cardClass += ' checked';
@@ -693,19 +933,8 @@
                 card.className = cardClass;
                 card.style.animationDelay = `${index * 0.01}s`;
                 
-                // Get display name (show "174.5" instead of "174_5")
-                const displayNum = displayNames[num] || num;
-                
-                // Determine image filename
-                let imageName;
-                if (imageNames[num]) {
-                    // Half pocket - use mapped name like "174h.jpg"
-                    imageName = `${imageNames[num]}.jpg`;
-                } else {
-                    // Regular pocket - pad with zeros like "001.jpg"
-                    const paddedNum = String(num).padStart(3, '0');
-                    imageName = `${paddedNum}.jpg`;
-                }
+                const imageName = getImageName(collection, num);
+                const displayName = getDisplayName(collection, num);
                 
                 let statusLabel = 'Need it';
                 if (state === 'collected') statusLabel = 'Got it!';
@@ -715,15 +944,15 @@
                     <div class="image-container">
                         <img 
                             src="${imageName}" 
-                            alt="Pocket ${displayNum}"
+                            alt="${displayName}"
                             class="pocket-image"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                         >
                         <div class="placeholder-image" style="display: none;">
-                            ${displayNum}
+                            ${collection.prefix}${num}
                         </div>
                     </div>
-                    <div class="pocket-title">Pocket #${displayNum}</div>
+                    <div class="pocket-title">${displayName}</div>
                     <div class="checkbox-container">
                         <div class="custom-checkbox">
                             ${state === 'collected' ? '✓' : state === 'buy-cheap' ? '$' : ''}
@@ -732,22 +961,63 @@
                     </div>
                 `;
 
-                card.addEventListener('click', () => togglePocket(num));
+                card.addEventListener('click', () => togglePocket(storageKey, displayName));
                 grid.appendChild(card);
             });
         }
 
-        // Update statistics
         function updateStats() {
+            const collection = getCurrentCollection();
+            const pocketNumbers = generatePocketNumbers(collection);
             const total = pocketNumbers.length;
-            const collected = Object.values(pocketData).filter(v => v === 'collected').length;
-            const buyCheap = Object.values(pocketData).filter(v => v === 'buy-cheap').length;
+            
+            let collected = 0;
+            let buyCheap = 0;
+            
+            pocketNumbers.forEach(num => {
+                const key = getStorageKey(collection, num);
+                if (pocketData[key] === 'collected') collected++;
+                if (pocketData[key] === 'buy-cheap') buyCheap++;
+            });
+            
             const remaining = total - collected - buyCheap;
 
             document.getElementById('total-count').textContent = total;
             document.getElementById('collected-count').textContent = collected;
             document.getElementById('buy-cheap-count').textContent = buyCheap;
             document.getElementById('remaining-count').textContent = remaining;
+        }
+
+        function jumpToPocket() {
+            const input = document.getElementById('jump-input');
+            let searchValue = input.value.trim();
+            
+            if (!searchValue) return;
+            
+            const cards = document.querySelectorAll('.pocket-card');
+            let foundCard = null;
+            
+            cards.forEach(card => {
+                const title = card.querySelector('.pocket-title').textContent;
+                if (title.includes(searchValue)) {
+                    foundCard = card;
+                }
+            });
+            
+            if (foundCard) {
+                foundCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                foundCard.style.transform = 'scale(1.1) rotate(0deg)';
+                foundCard.style.boxShadow = '0 0 30px rgba(2, 132, 199, 0.6)';
+                
+                setTimeout(() => {
+                    foundCard.style.transform = '';
+                    foundCard.style.boxShadow = '';
+                }, 2000);
+                
+                input.value = '';
+            } else {
+                alert(`Pocket not found. Try just the number.`);
+            }
         }
 
         // Event listeners
@@ -761,47 +1031,8 @@
             }
         });
 
-        // Jump to pocket functionality
-        function jumpToPocket() {
-            const input = document.getElementById('jump-input');
-            let searchValue = input.value.trim();
-            
-            if (!searchValue) return;
-            
-            // Convert to internal format (replace . with _)
-            let pocketKey = searchValue.replace('.', '_');
-            
-            // Find the card element
-            const cards = document.querySelectorAll('.pocket-card');
-            let foundCard = null;
-            
-            cards.forEach(card => {
-                const title = card.querySelector('.pocket-title').textContent;
-                // Extract number from "Pocket #174.5" format
-                const cardNumber = title.replace('Pocket #', '');
-                if (cardNumber === searchValue) {
-                    foundCard = card;
-                }
-            });
-            
-            if (foundCard) {
-                // Scroll to card with smooth animation
-                foundCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                
-                // Highlight the card temporarily
-                foundCard.style.transform = 'scale(1.1) rotate(0deg)';
-                foundCard.style.boxShadow = '0 0 30px rgba(2, 132, 199, 0.6)';
-                
-                setTimeout(() => {
-                    foundCard.style.transform = '';
-                    foundCard.style.boxShadow = '';
-                }, 2000);
-                
-                input.value = '';
-            } else {
-                alert(`Pocket #${searchValue} not found. Make sure you enter a valid pocket number (1-373 or half pockets like 174.5)`);
-            }
-        }
+        document.getElementById('prev-collection').addEventListener('click', () => switchCollection(-1));
+        document.getElementById('next-collection').addEventListener('click', () => switchCollection(1));
         
         document.getElementById('jump-button').addEventListener('click', jumpToPocket);
         document.getElementById('jump-input').addEventListener('keypress', (e) => {
@@ -810,7 +1041,7 @@
             }
         });
 
-        // Initialize on load
+        // Initialize
         initDatabase();
     </script>
 </body>
