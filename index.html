@@ -726,7 +726,16 @@
 
     <div class="back-to-top" id="back-to-top" title="Back to top">↑</div>
 
-    <div id="modal" class="modal">
+    <div id="confirm-clear-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Are you sure?</div>
+            <div class="modal-text">You're about to remove the status of <strong id="confirm-clear-name"></strong>. This can't be undone!</div>
+            <div class="modal-buttons">
+                <button class="btn" id="btn-confirm-clear" style="background: #94A3B8; color: white; box-shadow: 4px 4px 0px var(--secondary);">Yes, clear it</button>
+                <button class="btn btn-cancel" id="btn-cancel-clear">No, go back</button>
+            </div>
+        </div>
+    </div>
         <div class="modal-content">
             <div class="modal-title" id="modal-title">Pocket #<span id="modal-pocket-number"></span></div>
             <div class="modal-text">What's the status of this pocket?</div>
@@ -1123,11 +1132,30 @@
         // Event listeners
         document.getElementById('btn-collected').addEventListener('click', () => setPocketStatus('collected'));
         document.getElementById('btn-buy-cheap').addEventListener('click', () => setPocketStatus('buy-cheap'));
-        document.getElementById('btn-none').addEventListener('click', () => setPocketStatus('none'));
+        document.getElementById('btn-none').addEventListener('click', () => {
+            // Show confirmation modal instead of clearing immediately
+            document.getElementById('confirm-clear-name').textContent = pendingToggle.display;
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('confirm-clear-modal').classList.add('active');
+        });
         document.getElementById('btn-cancel').addEventListener('click', closeModal);
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target.id === 'modal') {
                 closeModal();
+            }
+        });
+
+        // Confirm clear modal
+        document.getElementById('btn-confirm-clear').addEventListener('click', () => {
+            setPocketStatus('none');
+            document.getElementById('confirm-clear-modal').classList.remove('active');
+        });
+        document.getElementById('btn-cancel-clear').addEventListener('click', () => {
+            document.getElementById('confirm-clear-modal').classList.remove('active');
+        });
+        document.getElementById('confirm-clear-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'confirm-clear-modal') {
+                document.getElementById('confirm-clear-modal').classList.remove('active');
             }
         });
 
