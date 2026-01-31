@@ -176,6 +176,7 @@
 
         .collection-nav {
             display: flex;
+            flex-direction: row;
             align-items: center;
             justify-content: center;
             gap: 2rem;
@@ -183,17 +184,36 @@
             flex-wrap: wrap;
         }
 
+        .collection-title {
+            order: 2;
+        }
+
+        .nav-arrow:first-of-type {
+            order: 1;
+        }
+
+        .nav-arrow:last-of-type {
+            order: 3;
+        }
+
         @media (max-width: 768px) {
             .collection-nav {
-                flex-direction: column;
+                flex-direction: row;
                 gap: 1rem;
             }
             
-            .nav-arrows {
-                display: flex;
-                gap: 2rem;
+            .collection-title {
+                order: 1;
                 width: 100%;
-                justify-content: center;
+                text-align: center;
+            }
+            
+            .nav-arrow:first-of-type {
+                order: 2;
+            }
+            
+            .nav-arrow:last-of-type {
+                order: 3;
             }
         }
 
@@ -662,11 +682,9 @@
         </header>
 
         <div class="collection-nav">
+            <div class="nav-arrow" id="prev-collection">←</div>
             <div class="collection-title" id="collection-name">Regular Pockets</div>
-            <div class="nav-arrows">
-                <div class="nav-arrow" id="prev-collection">←</div>
-                <div class="nav-arrow" id="next-collection">→</div>
-            </div>
+            <div class="nav-arrow" id="next-collection">→</div>
         </div>
 
         <div class="stats">
