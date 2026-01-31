@@ -1077,12 +1077,29 @@
             
             if (!searchValue) return;
             
+            const collection = getCurrentCollection();
             const cards = document.querySelectorAll('.pocket-card');
             let foundCard = null;
             
+            // Build the expected display name
+            let searchName;
+            if (collection.id === 'regular') {
+                searchName = `Pocket #${searchValue}`;
+            } else if (collection.id === 'mega') {
+                searchName = `Mega ${searchValue}`;
+            } else if (collection.id === 'classics') {
+                searchName = `Classics #${searchValue}`;
+            } else {
+                let singularName = collection.name;
+                if (singularName.toLowerCase().endsWith('pockets')) {
+                    singularName = singularName.slice(0, -1);
+                }
+                searchName = `${singularName} #${searchValue}`;
+            }
+            
             cards.forEach(card => {
                 const title = card.querySelector('.pocket-title').textContent;
-                if (title.includes(searchValue)) {
+                if (title === searchName) {
                     foundCard = card;
                 }
             });
@@ -1099,7 +1116,7 @@
                 
                 input.value = '';
             } else {
-                alert(`Pocket not found. Try just the number.`);
+                alert(`Pocket #${searchValue} not found in ${collection.name}.`);
             }
         }
 
